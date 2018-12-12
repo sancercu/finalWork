@@ -1,0 +1,56 @@
+<!-- Breadcrumb de navegacion -->
+<nav class="breadCrum" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/podcasts']">Noticia</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ podcast?.title }}</li>
+  </ol>
+</nav>
+
+<app-spinner *ngIf="loading"></app-spinner>
+
+<!-- Card con el contenido en detalle de un podcast -->
+<div class="card mb-3" *ngIf="!loading">
+  <div class="contentImg" data-toggle="modal" data-target="#exampleModal" style="cursor: pointer;">
+    <!-- <img class="card-img-top" src="./assets/images/ladoGay.jpg"> -->
+    <img class="card-img-top" [src]="podcast.cover" [alt]="podcast.title">
+    <div class="card-img-overlay">
+      <h5 class="card-title likes-amount"><span class="badge badge-pill badgeBg">{{ podcast.likes_amount }} likes</span></h5>
+    </div>
+  </div>
+  <div class="card-body" style="z-index: 999;">
+    <h3 class="card-title mb-0">
+      <b>{{ podcast.title }}</b>
+      <span class="float-right">
+        <a *ngIf="sessionStatus && podcast.likeme" class="action" title="Unlike" (click)="doUnlike()">
+          <img height="30px" style="vertical-align: sub;" src="../../../../../../../assets/images/like2.svg" alt="">
+        </a>
+        <a *ngIf="sessionStatus && !podcast.likeme" class="action" title="Like" (click)="doLike()">
+          <img height="30px" style="vertical-align: sub;" src="../../../../../../../assets/images/like.svg" alt="">
+        </a>
+      </span>
+    </h3>
+    <p class="small text-muted"><span class="author">{{ podcast.author }}</span> - <span class="author">{{ podcast.year }}</span></p>
+
+    <p class="mt-2">{{ podcast.description }}</p>
+    <small class="text-muted">{{ podcast.created | amTimeAgo }}</small>
+
+    <div class="mt-2" *ngIf="podcast.youtube_url != null">
+      <iframe width="100%" height="315" [src]="getSafeUrl()" frameborder="0">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="">
+        <button type="button" class="close btnClose" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color: #fff;">&times;</span>
+        </button>
+        <img class="card-img-top" [src]="podcast.cover" [alt]="podcast.title">
+      </div>
+    </div>
+  </div>
+</div>

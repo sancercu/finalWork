@@ -1,0 +1,8 @@
+// Le damos estilos a los inputs que tienen el estado invalido
+.ng-invalid.ng-dirty:not(form) {
+    border: 1px solid #a94442;
+}
+
+input {
+    margin: 2px;
+}

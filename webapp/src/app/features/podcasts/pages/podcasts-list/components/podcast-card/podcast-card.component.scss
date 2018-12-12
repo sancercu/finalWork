@@ -1,0 +1,39 @@
+.author {
+    font-style: italic;
+}
+
+.action {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.likes-amount {
+    text-align: right !important;
+}
+
+.card{
+    border: 0px;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    transition: all .2s linear;
+    cursor: pointer;
+    &:hover{
+        box-shadow: 0 .525rem 1.25rem rgba(0,0,0,.17);
+    }
+}
+
+.contentImg{
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    img{
+        height: 300px;
+        width: 100%;
+        object-fit: cover;
+    }
+    .badgeBg{
+        background: rgba(0, 0, 0, .6);
+        color: #fff;
+        font-weight: 100;
+    }
+}

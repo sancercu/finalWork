@@ -1,0 +1,53 @@
+.modal-dialog{
+    margin-top: 80px!important;
+}
+
+.card{
+    border: 0px;
+}
+
+.btnClose{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: #444;
+    border-radius: 100px;
+    margin: 0px;
+    padding: 2px 6px 6px 7px;
+    position: absolute;
+    right: 10px; 
+    top: 10px;
+}
+
+.likes-amount {
+    text-align: right !important;
+}
+
+.action {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.breadCrum{
+    ol{
+        background: none;
+        margin-bottom: 5px;
+    }
+}
+
+.contentImg{
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    img{
+        height: 300px;
+        width: 100%;
+        object-fit: cover;
+    }
+    .badgeBg{
+        background: rgba(0, 0, 0, .6);
+        color: #fff;
+        font-weight: 100;
+    }
+}

@@ -1,0 +1,20 @@
+header {
+    // Estilos para fixear el header ante scrolling
+    margin-bottom: 10px;
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+}
+
+a {
+    color: #677d94 !important;
+}
+
+.card-footer {
+    text-align: center;
+}
+
+.container-fluid {
+    // Estilos para colocar el contenido de las paginas debajo del header fixeado
+    padding-top: 65px;
+}

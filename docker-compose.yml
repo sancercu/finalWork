@@ -1,0 +1,85 @@
+# Usamos la version 3 de Docer Compose
+version: '3'
+
+# Definimos los servicios (componentes arquitectonicos) de nuestra aplicacion
+services:
+
+  # Definimos el servicio db => MySQL
+  db:
+    # Indicamos la imagen de MySQL a utilizar
+    image: mysql:5.7
+    # El contenedor MySQL expone el puerto 3306
+    ports:
+      - 3306:3306
+    # Seteamos variables de entorno para el contenedor MySQL
+    # => permite crear el usuarios y sus credenciales de acceso a la base de datos
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: udeusr
+      MYSQL_PASSWORD: udepasswd
+      MYSQL_DATABASE: podcasts
+
+  # Definimos el servicio api => backend Django usando Django REST framework y Django REST auth
+  api:
+    # Indicamos el contexto de build para el servicio api
+    build: ./api
+    # Indicamos el comando a ejecutar una vez que arranque el contenedor
+    # => levanta el servidor de desarrollo de Django
+    command: python manage.py runserver 0.0.0.0:8000
+    # Definimos los volumenes del servicio api
+    volumes:
+      # Mapeamos el codigo fuente
+      - ./api:/code
+    ports:
+      # Exponemos el puerto 8000 donde tendremos la API a consumir desde Angular
+      - 8000:8000
+    depends_on:
+      - db
+
+  # Definimos el servicio webapp => frontend Angular
+  webapp:
+    build:
+      # Indicamos el contexto de build para el servicio webapp
+      context: ./webapp
+    volumes:
+      # Creamos un host volume => mapeamos el codigo fuente
+      - ./webapp:/usr/src/app
+      # Creamos un anonymous volume para que no se pisen las dependencias NodeJs cuando creamos la imagen
+      - /usr/src/app/node_modules
+    ports:
+      # Exportamos el puerto 4200
+      - 4200:4200
+
+  # Definimos el servicio phpmyadmin => cliente grafico para entrar a la base de datos
+  phpmyadmin:
+    # Indicamos la imagen de phpMyAdmin a utilizar
+    image: phpmyadmin/phpmyadmin
+    # Seteamos las variables de entorno
+    environment:
+      - PMA_ARBITRARY=1
+    # Indicamos que ante un error el servicio se reinicie siempre
+    restart: always
+    # Exponemos el puerto 80 del contenedor en el puerto 8082 del host
+    ports:
+      - 8082:80
+    # Definimos un anonymous volume para phpMyAdmin
+    volumes:
+      - /sessions
+
+  # Definimos el servicio portainer => cliente grafico para gestionar los contenedores
+  portainer:
+    # Indicamos la imagen de portainer a utilizar
+    image: portainer/portainer
+    # Exponemos el puerto 9000
+    ports:
+      - 9000:9000
+    # Indicamos el comando con el cual correr el servicio de portainer luego de que arranque el contenedor
+    command: -H unix:///var/run/docker.sock
+    # Definimos los volumenes que necesita portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+# Definimos los volumenes nombrados a manejar por Docker
+volumes:
+  portainer_data:

@@ -1,0 +1,30 @@
+<!-- Card Bootstrap (https://getbootstrap.com/docs/4.1/components/card/) para renderizar un podcasts del listado de podcasts -->
+<div class="shadow-sm">
+  <div class="card ml-0 mr-0 mt-2">
+    <div class="contentImg" [routerLink]="['/podcasts', podcast.id]">
+      <img class="card-img-top" [src]="podcast.cover" alt="podcast.title">
+      <!-- <img class="card-img-top" src="./assets/images/ladoGay.jpg"> -->
+      <div class="card-img-overlay">
+        <h5 class="card-title likes-amount"><span class="badge badge-pill badgeBg">{{ podcast.likes_amount }} likes</span></h5>
+      </div>
+    </div>
+    <div class="card-body" style="z-index: 999;">
+      <div [routerLink]="['/podcasts', podcast.id]">
+        <h4 class="card-title mb-0">
+          <b>{{ podcast.title }}</b> 
+        </h4>
+        <p class="small text-muted mb-2"><span class="author">{{ podcast.author }}</span> - <span class="author"><em>{{ podcast.year }}</em></span></p>
+        <p class="mt-1 mb-1" style="font-size: 90%;">{{ podcast.description | slice:1:200 }}...</p>
+      </div>  
+      <small class="text-muted">{{ podcast.created | amTimeAgo }}</small>
+      <small class="float-right">
+        <a *ngIf="sessionStatus && podcast.likeme" class="action" title="Unlike" (click)="doUnlike()">
+          <img height="30px" src="../../../../../../../assets/images/like2.svg" alt="">
+        </a>
+        <a *ngIf="sessionStatus && !podcast.likeme" class="action" title="Like" (click)="doLike()">
+          <img height="30px" src="../../../../../../../assets/images/like.svg" alt="">
+        </a>
+      </small>
+    </div>
+  </div>
+</div>

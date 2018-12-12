@@ -1,0 +1,14 @@
+<!-- Input para buscar podcasts. Espera a que el usuario ingrese un texto dentro del rango de 1 segundo y dispara el requerimiento a la API si el valor del texto cambio respecto del valor anterior -->
+<input style="margin-bottom: 5px" type="text" placeholder="Search..." class="form-control" id="q" [ngModel]="q" (ngModelChange)="search($event)" name="q">
+
+<div class="form-row">
+  <!-- Iteramos y renderizamos un component PodcastCardComponent por cada podcast que tengamos hayamos recuperado de la API -->
+  <app-podcast-card class="col-12 col-sm-6 col-md-4" *ngFor="let podcast of podcasts" [podcast]="podcast"></app-podcast-card>
+</div>
+
+<app-spinner *ngIf="loading"></app-spinner>
+
+<!-- Implementacion de un infinite scroll: https://www.npmjs.com/package/ngx-infinite-scroll -->
+<div infiniteScroll
+    (scrolled)="onScroll()">
+</div>
