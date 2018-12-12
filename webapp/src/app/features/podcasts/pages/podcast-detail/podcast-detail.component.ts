@@ -45,7 +45,7 @@ export class PodcastDetailComponent implements OnInit {
   }
 
   public getSafeUrl(){
-    return this.sanitizer.bypassSecurityTrustUrl(this.podcast.youtube_url)
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.podcast.youtube_url)
   }
 
   public showYouTube() {
